@@ -15,8 +15,7 @@ def create_users_table(cursor):
             userid INTEGER PRIMARY KEY NOT NULL,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            timestamp TEXT NOT NULL,
-            value REAL
+            timestamp TEXT NOT NULL
         )
     ''')
 
@@ -58,9 +57,9 @@ def insert_into_users(cursor, username, password):
 
     try:
         cursor.execute('''
-            INSERT INTO users (username, password, timestamp, value)
-            VALUES (?, ?, ?, ?)
-        ''', (username, password, timestamp, 23424.234)) #made up value data
+            INSERT INTO users (username, password, timestamp)
+            VALUES (?, ?, ?)
+        ''', (username, password, timestamp))
     except sqlite3.Error as e:
         print('Insert error into the user table: {}'.format(e))
 
@@ -145,32 +144,32 @@ def main():
     conn.commit()
 
     create_users_table(cur)
-    insert_into_users(cur, 'jberria', '100234')
-    insert_into_users(cur, 'bunnyss', 'password')
-    insert_into_users(cur, 'sallyw', '123455six')
+    insert_into_users(cur, 'asmith', '100234')
+    insert_into_users(cur, 'tvongaugh', 'password')
+    insert_into_users(cur, 'sallywinco', '123455six')
     insert_into_users(cur, 'dbuser', 'sekret33@')
     conn.commit()
 
     create_tweet_table(cur)
-    insert_into_tweets(cur, "what is up", 'jberria')
-    insert_into_tweets(cur, "there is a banana", 'sallyw')
-    insert_into_tweets(cur, "oh you know what yeah", 'sallyw')
-    insert_into_tweets(cur, "now that you see 3.4545", 'jberria')
+    insert_into_tweets(cur, "what is up", 'asmith')
+    insert_into_tweets(cur, "there is a banana", 'sallywinco')
+    insert_into_tweets(cur, "oh you know what yeah", 'sallywinco')
+    insert_into_tweets(cur, "now that you see 3.4545", 'asmith')
     insert_into_tweets(cur, "3.14 is my favorite desert", 'dbuser')
-    insert_into_tweets(cur, "what ever man I love you typescript python", 'bunnyss')
+    insert_into_tweets(cur, "what ever man I love you typescript python", 'tvongaugh')
     conn.commit()
 
-    find_user(cur, username='jberria')
-    find_user(cur, username='sallyw', password="123455six")
+    find_user(cur, username='asmith')
+    find_user(cur, username='sallywinco', password="123455six")
     find_user(cur, username='notThere')
     find_user(cur, password='sekret33@')
 
-    print_user_tweets(cur, 'jberria')
-    print_user_tweets(cur, 'bunnyss')
-    print_user_tweets(cur, 'sallyw')
+    print_user_tweets(cur, 'asmith')
+    print_user_tweets(cur, 'tvongaugh')
+    print_user_tweets(cur, 'sallywinco')
     print_user_tweets(cur, 'dbuser')
 
-    delete_from_user(cur, 'sallyw')
+    delete_from_user(cur, 'sallywinco')
     conn.commit()
 
     cur.close()
