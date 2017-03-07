@@ -5,6 +5,7 @@ import sqlite3
 from os.path import isfile
 from os import remove
 
+#change this path to where you would like to have the database created.
 DATABASE_FILE = "/Users/jberria/DBs/test.db"
 
 
